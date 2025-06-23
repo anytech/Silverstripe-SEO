@@ -71,22 +71,26 @@ class MetaPreviewField extends LiteralField
      *
      * @return string
      **/
-    private function getPageMetaTitle()
-    {
-        if($this->page->MetaTitle) {
-            return $this->page->MetaTitle;
+    private function getPageMetaTitle() {
+        $siteTitle = SiteConfig::current_site_config()->Title;
+    
+        if ($this->page->MetaTitle) {
+            return $this->page->MetaTitle . ' &raquo; ' . $siteTitle;
         }
-        if(class_exists(BlogPost::class)) {
-            if($this->page instanceof BlogPost) {
-                if($this->page->Parent()->DefaultPostMetaTitle == 1) {
-                    return $this->page->Title;
+    
+        if (class_exists(BlogPost::class)) {
+            if ($this->page instanceof BlogPost) {
+                if ($this->page->Parent()->DefaultPostMetaTitle == 1) {
+                    return $this->page->Title . ' &raquo; ' . $siteTitle;
                 }
             }
         }
+    
         if ($this->page->Title) {
-            return $this->page->Title;
+            return $this->page->Title . ' &raquo; ' . $siteTitle;
         }
-        return Config::inst()->get(MetaPreviewField::class, 'meta_title');
+    
+        return Config::inst()->get(MetaPreviewField::class, 'meta_title') . ' &raquo; ' . $siteTitle;
     }
 
     /**
