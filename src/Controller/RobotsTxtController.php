@@ -2,6 +2,7 @@
 
 namespace PlasticStudio\SEO\Controller;
 
+use SilverStripe\Core\Environment;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
@@ -47,8 +48,13 @@ class RobotsTxtController extends Controller
                 'Host' => Director::absoluteBaseUrl()
             ])->renderWith('RobotsTxtDisallowAll');
         }
-        
-        // Check base URL for trailing slash, add so filepath for robots.txt is correct
+
+        if (Environment::getEnv('SS_ENVIRONMENT_TYPE') != 'live') {
+            return $this->customise([
+                'Host' => Director::absoluteBaseUrl()
+            ])->renderWith('RobotsTxtDisallowAll');
+        }
+
         $baseURL = Director::absoluteBaseUrl();
         if(strrev($baseURL)[0] != '/') {
             $baseURL .= '/';

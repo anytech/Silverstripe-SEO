@@ -9,7 +9,7 @@
                     <div class="seo-serp-url__text">$SerpMetaLink</div>
                 </div>
             </div>
-            <div class="seo-serp-text seo-serp-title">$SerpMetaTitle</div>
+            <div class="seo-serp-text seo-serp-title">$SerpMetaTitle &raquo; $SiteConfig.Title</div>
             <div class="seo-serp-description">$SerpMetaDescription</div>
         </div>
     </div>
